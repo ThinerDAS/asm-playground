@@ -1,9 +1,26 @@
+# Yellow Playground
+
 Hello, fellows!
-I think that, a linux assembly playground will be very helpful for you.
-Make sure you have "gef" installed in your gdb, along with its libraries, in specific "keystone". Then, type in shell:
-    gcc main.c -o main
+
+I hope that a linux assembly playground will be very helpful for you.
+
+Make sure you have [gef](https://github.com/hugsy/gef#install) installed in your gdb, along with its [suggested libraries](https://github.com/hugsy/gef#dependencies), in specific "keystone".
+
+Then, type in shell:
+
+```shell
+gcc main.c -o main
+```
+
 and use gdb to open it:
-    gdb main
+
+```shell
+gdb main
+```
+
 and inside gdb, type:
-    source play.py
-    play
+
+```shell
+source play.py
+play
+```
