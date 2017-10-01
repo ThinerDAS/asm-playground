@@ -36,6 +36,6 @@ Homework:
 
 * Try out normal instructions like `mov`, `add`, etc.
 * Try out instructions related to stack and `rip`, like `push`, `pop`, 'jmp', 'call', `ret`, `leave`, etc.
-* Try a C function call. Find out the address of `printf` and call `printf("Hello, %dth challenger!\n", 100);`. Find the address of `malloc` and allocate a memory `malloc(0x100)` with assembly and put the memory address to `rdi`.
+* Try a C function call. Find out the address of `printf` and call `printf("Hello, %dth challenger!\n", 100);`. Find the address of `malloc`, allocate a memory, `malloc(0x100);`, with assembly and put the memory address to `rdi`.
 * Try a syscall. Do `sys_read(0, rsp, 100)` to populate the stack, and `sys_execve(rsp, 0, 0)` to execute your program.
 * Reread the programs we have compiled using `gcc` up to this time, and compile some more programs. Point out the calling convention inside the assembly.

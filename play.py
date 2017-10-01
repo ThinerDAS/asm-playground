@@ -13,31 +13,35 @@ class PlaygroundCommand(gdb.Command):
     """Wrapper."""
 
     _syntax_ = (
-        "\tplayground [as|asm|assembly] [-a starting_address] assembly[;assembly;...;assembly]\n"
+        "\tplayground [as|asm|assemble] [-a starting_address] assembly[;assembly;...;assembly]\n"
         "\tplayground [wm|writemem|write_memory] address data\n"
         "\tplayground [wb|writeb|write_binary] address data-in-hex\n"
         "\tplayground [p|patchi|patch_instruction]\n"
         "Example:\n"
-        "\tplayground as add eax,4;syscall\n"
-        "\tplayground as -a $pc+2 jmp 0x400500\n"
+        "\tplayground as \"add eax,4;syscall\"\n"
+        "\tplayground as -a $pc+2 \"jmp 0x400500\"\n"
         "\tplayground wm 0x400600 \"Hello, world!\"\n"
         "\tplayground wb 0x400500 83c00a\n"
-        "\tplayground p $pc sub rsp,0x10;mov edx,0;int 0x80\n")
+        "\tplayground p $pc \"sub rsp,0x10;mov edx,0;int 0x80\"\n")
 
     def __init__(self):
         super(PlaygroundCommand, self).__init__("playground", gdb.COMMAND_USER)
 
     def help(self):
         print('Usage:')
-        print(self._syntax_.replace('playground', '\x1b[32mplayground\x1b[39m')
-              .replace('\t', ' ' * 4))
+        s = self._syntax_.replace(
+            'playground', '\x1b[32mplayground\x1b[39m').replace('\t', ' ' * 4)
+        sl = s.split('"')
+        ss = ''.join(sl[2 * i] + '\x1b[33m"' + sl[2 * i + 1] + '"\x1b[39m'
+                     for i in range(len(sl) // 2))
+        print(ss)
 
     def invoke(self, arg, from_tty):
         argv = gdb.string_to_argv(arg)
         if not argv:
             self.help()
             return
-        if argv[0] in ['as', 'asm', 'assembly']:
+        if argv[0] in ['as', 'asm', 'assemble']:
             # asm command, convert the assembly to binary
             addr = -1
             code = ""
